@@ -236,7 +236,6 @@ int main() {
     Date hire(1998, 4, 1);
     Date today(2010, 4, 30);
     Employee manager("Bob", "Blue", birth, hire);
-    cout << endl;
     manager.print();
     cout << endl;
     cout << manager.getAge(today) << endl;
