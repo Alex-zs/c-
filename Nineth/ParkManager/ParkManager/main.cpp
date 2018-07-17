@@ -11,6 +11,87 @@
 
 using namespace std;
 
+class Automobile;
+
+class Park{
+public:
+    void showInfo();
+    Park(int N);
+    int getMoney(){return money;}
+    int getNow(){return now;}
+    int getCar(){return car;}
+    void enterCar(Automobile * newCar);
+    void leaveCar(Automobile * newCar,int count);
+    bool checkout();
+private:
+    Automobile ** spaces;
+    int money;
+    int now;
+    int car;
+};
+
+
+class Automobile{
+public:
+    string getCarNum();
+    virtual void enter(Park *park) {}
+    virtual void leave(Park *park){}
+    virtual void pay(Park *park){}  //向停车场支付停车费
+    Automobile(string carNum);
+private:
+    string carNum;
+};
+
+class Truck:public Automobile {
+private:
+    double load;
+public:
+    Truck(string carNum, double load);
+    void enter(Park * park);
+    void leave(Park * park);
+    void pay();
+    
+};
+
+class Car:public Automobile{
+private:
+    string brand;
+public:
+    Car(string carNum, string brand);
+    void pay();
+    void enter(Park * park);
+    void leave(Park * park);
+};
+
+class Bus:public Automobile{
+private:
+    int people;
+public:
+    void pay();
+    Bus(string carNum, int people);
+    void enter(Park * park);
+    void leave(Park * park);
+};
+
+Park::Park(int N){
+    spaces = new Automobile * [N];
+    for(int i = 0; i < N; i++){
+        spaces[i] = NULL;
+    }
+    this->money = 0;
+    this->now = 0;
+    this->car = N;
+}
+
+bool Park::checkout(){
+    for(int i=0; i < car; i++){
+        if (spaces[i] == NULL){
+            return true;
+        }
+    }
+    return false;
+}
+
 int main() {
     int N;
     cout << "请输入停车位数量:";
